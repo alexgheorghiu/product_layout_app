@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'MyHomePage.dart';
+import 'myhomepage.dart';
 
 void main() => runApp(const MyApp());
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(        
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Product routing demo home page'),
+      home: MyHomePage(title: 'Product routing demo home page'),
     );
   }
 }
