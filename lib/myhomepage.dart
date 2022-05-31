@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:product_layout_app/productboxlist.dart';
 
-import 'productbox.dart';
 import 'product.dart';
-import 'productpage.dart';
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? thekey, required this.title}) : super(key: thekey);
+  MyHomePage({Key? thekey, required this.title, required this.products}) : super(key: thekey);
   
   final String title;
-  final  items = Product.getProducts();
+  final Future<List<Product>> products;
 
   @override
   Widget build(BuildContext context){
@@ -17,21 +16,15 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
 
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index){
-          return GestureDetector(
-            child: ProductBox(item: items[index]),
-            onTap: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => ProductPage(item:items[index],)
-                  )
-                );
-            },
-          );
-        },
+      body: Center(
+        child: FutureBuilder<List<Product>>(
+          future: products,
+          builder: (context, snapshot){
+            if(snapshot.hasError) print(snapshot.error);
+
+            return snapshot.hasData ? ProductBoxList(items: snapshot.data) : const Center(child: Text('No data'));
+          },
+        ),
       )
     );
   }
